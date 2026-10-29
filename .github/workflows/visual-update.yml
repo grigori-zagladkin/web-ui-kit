@@ -1,0 +1,33 @@
+name: Update screenshots
+
+# Ручной запуск (Actions → Update screenshots → Run workflow):
+# снимает эталоны в том же образе Playwright, что и проверка, и коммитит их в ветку.
+# Нужен, если под рукой нет Docker.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.49.1-noble
+      options: --ipc=host
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci --no-audit --no-fund
+      - run: npm run visual:ci -- --update-snapshots
+        env:
+          CI: '1'
+          HOME: /root
+      - name: Commit screenshots
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add tests/__screenshots__
+          git diff --cached --quiet && echo "Эталоны не изменились" && exit 0
+          git commit -m "Обновить эталоны скриншотов"
+          git push

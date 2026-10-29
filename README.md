@@ -1,6 +1,12 @@
-# UI-кит
+# @zgv/ui-kit
 
 Минималистичный UI-кит на React + TypeScript. Компоненты по умолчанию серверные (SSR/RSC), клиентский код — только там, где без него нельзя. Светлая и тёмная темы, CSS Modules, скриншотные тесты в Docker.
+
+```bash
+npm install @zgv/ui-kit
+```
+
+Требования: React 18.3+ и бандлер с поддержкой импорта CSS из пакетов — Next.js 13.4+ (App Router), Vite, Webpack 5. Пакет только ESM.
 
 ```
 ui-kit/
@@ -11,19 +17,18 @@ ui-kit/
 ├── stories/             истории Storybook — они же сценарии скриншотных тестов
 ├── tests/               Playwright: visual.spec.ts, interactions.spec.ts, __screenshots__/
 ├── .storybook/          конфиг Storybook (переключатель темы в тулбаре)
+├── vite.lib.config.ts  сборка npm-пакета в dist/
 ├── playwright.config.ts
 ├── docker-compose.yml   окружение для скриншотов
-└── .github/workflows/visual.yml   пример CI
+└── .github/workflows/   visual.yml — проверка скриншотов, visual-update.yml — обновление эталонов
 ```
 
 ## Подключение
 
-Нужен бандлер с поддержкой CSS Modules (Next.js, Vite — из коробки).
-
 ```tsx
 // app/layout.tsx (Next.js App Router)
-import 'ui-kit/components/theme.css';
-import { ThemeProvider, ThemeScript, Toaster } from 'ui-kit/components';
+import '@zgv/ui-kit/theme.css';
+import { ThemeProvider, ThemeScript, Toaster } from '@zgv/ui-kit';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -142,7 +147,7 @@ const saved = JSON.parse(localStorage.getItem('users-table') ?? '{}');
 
 ```tsx
 'use client';
-import { Form, type FormFieldConfig } from 'ui-kit/components';
+import { Form, type FormFieldConfig } from '@zgv/ui-kit';
 
 // type, а не interface: interface не совместим с Record<string, unknown>
 type SignUp = { name: string; email: string; password: string; confirm: string; role: string; terms: boolean };
@@ -192,7 +197,7 @@ export const signUpFields = [ … ] satisfies FormFieldConfig<SignUp>[];
 
 // app/actions.ts
 'use server';
-import { validateValues } from 'ui-kit/utils';
+import { validateValues } from '@zgv/ui-kit/utils';
 const errors = await validateValues(signUpFields, values);
 if (Object.keys(errors).length) return { fieldErrors: errors };
 ```
@@ -299,3 +304,28 @@ export const Playground: Story = { tags: ['no-visual'], … }  // не сним�
 - **Form** — значения хранятся в одном объекте и вся форма перерисовывается при вводе. Для форм на десятки полей это незаметно; для сотен полей лучше разбить на шаги.
 - **EditorViewer** — оглавление без подсветки текущего раздела при прокрутке (это потребовало бы клиентский IntersectionObserver).
 - **Зависимости** — коммитьте `package-lock.json`: Docker и CI ставят пакеты по нему. Все пакеты `@tiptap/*` должны быть одной версии, иначе сборка падает на несовпадении экспортов.
+
+## Эталоны без Docker
+
+Если Docker под рукой нет, эталоны снимает GitHub Actions в том же образе Playwright: **Actions → Update screenshots → Run workflow**. Workflow `visual-update.yml` прогонит `--update-snapshots` и закоммитит `tests/__screenshots__/` в выбранную ветку. Снимать эталоны на Windows или macOS без Docker нельзя: шрифты и сглаживание отличаются, и проверка в CI будет падать.
+
+## Сборка и публикация пакета
+
+```bash
+npm run build      # dist/: JS по файлу на модуль, CSS по файлу на компонент, .d.ts
+npm pack           # zgv-ui-kit-<версия>.tgz — посмотреть, что уйдёт в npm
+```
+
+Как устроен пакет:
+- **Один JS-файл на модуль** (`preserveModules`) — у потребителя работает tree-shaking: импортировали `Button`, в бандл попали только Button.js и его CSS.
+- **CSS компонента подключается из его JS** (`import './Button.module.css'`), классы с префиксом `ui-`. Отдельно — `@zgv/ui-kit/theme.css` с токенами, подключается один раз.
+- **`'use client'` сохраняется** у клиентских компонентов и хуков, серверные остаются серверными.
+- **Зависимости не вшиты**: React — peer, Tiptap, TanStack Table и lucide-react ставятся вместе с пакетом. Tiptap попадает в бандл, только если используется `Editor` (`Form` грузит его лениво).
+
+Публикация (scope `@zgv` должен совпадать с вашим npm-логином или организацией):
+
+```bash
+npm login
+npm version patch  # или minor / major
+npm publish        # prepublishOnly сам запустит typecheck и build
+```
