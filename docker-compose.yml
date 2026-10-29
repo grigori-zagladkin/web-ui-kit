@@ -1,0 +1,25 @@
+# Скриншотные тесты в одинаковом окружении: официальный образ Playwright (Ubuntu + Chromium + шрифты).
+# Версия образа должна совпадать с версией @playwright/test в package.json.
+#
+#   docker compose run --rm visual          — проверить скриншоты
+#   docker compose run --rm visual-update   — перегенерировать эталоны
+
+services:
+  visual:
+    image: mcr.microsoft.com/playwright:v1.49.1-noble
+    working_dir: /work
+    ipc: host
+    environment:
+      CI: '1'
+    volumes:
+      - .:/work
+      # node_modules отдельно: бинарники с Windows/macOS в Linux-контейнере не работают
+      - node_modules:/work/node_modules
+    command: sh -c "npm install --no-audit --no-fund && npm run visual:ci"
+
+  visual-update:
+    extends: visual
+    command: sh -c "npm install --no-audit --no-fund && npm run visual:ci -- --update-snapshots"
+
+volumes:
+  node_modules:

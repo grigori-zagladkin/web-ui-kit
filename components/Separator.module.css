@@ -1,0 +1,34 @@
+.separator {
+  flex-shrink: 0;
+  background: var(--ui-border);
+}
+
+.horizontal {
+  width: 100%;
+  height: 1px;
+}
+
+.vertical {
+  width: 1px;
+  align-self: stretch;
+  min-height: 1em;
+}
+
+.labeled {
+  display: flex;
+  align-items: center;
+  gap: var(--ui-space-3);
+  width: 100%;
+}
+
+.line {
+  flex: 1;
+  height: 1px;
+  background: var(--ui-border);
+}
+
+.label {
+  color: var(--ui-fg-subtle);
+  font-size: var(--ui-text-xs);
+  white-space: nowrap;
+}

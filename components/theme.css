@@ -1,0 +1,186 @@
+/*
+ * Токены UI-кита. Подключается один раз в корне приложения:
+ *   import 'ui-kit/components/theme.css';
+ * Тема переключается атрибутом data-theme="light" | "dark" на <html> (см. ThemeProvider).
+ * Без атрибута используется системная тема.
+ */
+
+:root {
+  --ui-font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --ui-font-mono: ui-monospace, 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+
+  --ui-text-xs: 0.75rem;
+  --ui-text-sm: 0.8125rem;
+  --ui-text-md: 0.875rem;
+  --ui-text-lg: 1rem;
+  --ui-text-xl: 1.125rem;
+  --ui-text-2xl: 1.5rem;
+  --ui-leading: 1.5;
+
+  --ui-radius-sm: 4px;
+  --ui-radius-md: 6px;
+  --ui-radius-lg: 8px;
+  --ui-radius-xl: 12px;
+  --ui-radius-full: 999px;
+
+  --ui-space-1: 4px;
+  --ui-space-2: 8px;
+  --ui-space-3: 12px;
+  --ui-space-4: 16px;
+  --ui-space-5: 20px;
+  --ui-space-6: 24px;
+  --ui-space-8: 32px;
+
+  --ui-h-sm: 28px;
+  --ui-h-md: 34px;
+  --ui-h-lg: 40px;
+
+  --ui-duration: 140ms;
+  --ui-ease: cubic-bezier(0.2, 0, 0, 1);
+  --ui-z-overlay: 50;
+  --ui-z-toast: 60;
+
+  color-scheme: light;
+  --ui-bg: #ffffff;
+  --ui-bg-subtle: #fafafa;
+  --ui-bg-muted: #f4f4f5;
+  --ui-bg-hover: #f4f4f5;
+  --ui-bg-active: #e4e4e7;
+  --ui-bg-elevated: #ffffff;
+  --ui-fg: #18181b;
+  --ui-fg-muted: #71717a;
+  --ui-fg-subtle: #a1a1aa;
+  --ui-border: #e4e4e7;
+  --ui-border-strong: #d4d4d8;
+  --ui-primary: #18181b;
+  --ui-primary-hover: #3f3f46;
+  --ui-primary-fg: #fafafa;
+  --ui-ring: #a1a1aa;
+  --ui-overlay: rgb(9 9 11 / 0.4);
+
+  --ui-accent: #2563eb;
+  --ui-accent-bg: #eff6ff;
+  --ui-accent-border: #bfdbfe;
+  --ui-accent-fg: #1d4ed8;
+  --ui-success: #16a34a;
+  --ui-success-bg: #f0fdf4;
+  --ui-success-border: #bbf7d0;
+  --ui-success-fg: #15803d;
+  --ui-warning: #d97706;
+  --ui-warning-bg: #fffbeb;
+  --ui-warning-border: #fde68a;
+  --ui-warning-fg: #b45309;
+  --ui-danger: #dc2626;
+  --ui-danger-hover: #b91c1c;
+  --ui-danger-bg: #fef2f2;
+  --ui-danger-border: #fecaca;
+  --ui-danger-fg: #b91c1c;
+
+  --ui-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.05);
+  --ui-shadow-md: 0 4px 12px rgb(0 0 0 / 0.08), 0 1px 3px rgb(0 0 0 / 0.06);
+  --ui-shadow-lg: 0 16px 40px rgb(0 0 0 / 0.12), 0 2px 6px rgb(0 0 0 / 0.06);
+}
+
+/* Тёмная тема: явно через атрибут или по системной настройке, если атрибут не задан */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --ui-bg: #09090b;
+  --ui-bg-subtle: #0f0f12;
+  --ui-bg-muted: #18181b;
+  --ui-bg-hover: #1f1f23;
+  --ui-bg-active: #27272a;
+  --ui-bg-elevated: #131316;
+  --ui-fg: #fafafa;
+  --ui-fg-muted: #a1a1aa;
+  --ui-fg-subtle: #71717a;
+  --ui-border: #27272a;
+  --ui-border-strong: #3f3f46;
+  --ui-primary: #fafafa;
+  --ui-primary-hover: #d4d4d8;
+  --ui-primary-fg: #18181b;
+  --ui-ring: #71717a;
+  --ui-overlay: rgb(0 0 0 / 0.6);
+
+  --ui-accent: #60a5fa;
+  --ui-accent-bg: #0f1d33;
+  --ui-accent-border: #1e3a5f;
+  --ui-accent-fg: #93c5fd;
+  --ui-success: #4ade80;
+  --ui-success-bg: #0b2416;
+  --ui-success-border: #14532d;
+  --ui-success-fg: #86efac;
+  --ui-warning: #fbbf24;
+  --ui-warning-bg: #2a1d07;
+  --ui-warning-border: #713f12;
+  --ui-warning-fg: #fcd34d;
+  --ui-danger: #f87171;
+  --ui-danger-hover: #fca5a5;
+  --ui-danger-bg: #2a0f0f;
+  --ui-danger-border: #7f1d1d;
+  --ui-danger-fg: #fca5a5;
+
+  --ui-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --ui-shadow-md: 0 4px 12px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(255 255 255 / 0.04);
+  --ui-shadow-lg: 0 16px 40px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(255 255 255 / 0.05);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --ui-bg: #09090b;
+    --ui-bg-subtle: #0f0f12;
+    --ui-bg-muted: #18181b;
+    --ui-bg-hover: #1f1f23;
+    --ui-bg-active: #27272a;
+    --ui-bg-elevated: #131316;
+    --ui-fg: #fafafa;
+    --ui-fg-muted: #a1a1aa;
+    --ui-fg-subtle: #71717a;
+    --ui-border: #27272a;
+    --ui-border-strong: #3f3f46;
+    --ui-primary: #fafafa;
+    --ui-primary-hover: #d4d4d8;
+    --ui-primary-fg: #18181b;
+    --ui-ring: #71717a;
+    --ui-overlay: rgb(0 0 0 / 0.6);
+    --ui-accent: #60a5fa;
+    --ui-accent-bg: #0f1d33;
+    --ui-accent-border: #1e3a5f;
+    --ui-accent-fg: #93c5fd;
+    --ui-success: #4ade80;
+    --ui-success-bg: #0b2416;
+    --ui-success-border: #14532d;
+    --ui-success-fg: #86efac;
+    --ui-warning: #fbbf24;
+    --ui-warning-bg: #2a1d07;
+    --ui-warning-border: #713f12;
+    --ui-warning-fg: #fcd34d;
+    --ui-danger: #f87171;
+    --ui-danger-hover: #fca5a5;
+    --ui-danger-bg: #2a0f0f;
+    --ui-danger-border: #7f1d1d;
+    --ui-danger-fg: #fca5a5;
+    --ui-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+    --ui-shadow-md: 0 4px 12px rgb(0 0 0 / 0.5), 0 0 0 1px rgb(255 255 255 / 0.04);
+    --ui-shadow-lg: 0 16px 40px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(255 255 255 / 0.05);
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--ui-bg);
+  color: var(--ui-fg);
+  font-family: var(--ui-font-sans);
+  font-size: var(--ui-text-md);
+  line-height: var(--ui-leading);
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

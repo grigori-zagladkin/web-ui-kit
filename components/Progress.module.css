@@ -1,0 +1,76 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--ui-space-2);
+  font-size: var(--ui-text-sm);
+}
+
+.label {
+  color: var(--ui-fg);
+  font-weight: 500;
+}
+
+.value {
+  color: var(--ui-fg-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.track {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--ui-radius-full);
+  background: var(--ui-bg-muted);
+}
+
+.sm {
+  height: 4px;
+}
+
+.md {
+  height: 8px;
+}
+
+.bar {
+  height: 100%;
+  border-radius: inherit;
+  transition: width 240ms var(--ui-ease);
+}
+
+.default {
+  background: var(--ui-primary);
+}
+
+.success {
+  background: var(--ui-success);
+}
+
+.warning {
+  background: var(--ui-warning);
+}
+
+.danger {
+  background: var(--ui-danger);
+}
+
+.indeterminate {
+  position: absolute;
+  width: 40%;
+  animation: slide 1.2s var(--ui-ease) infinite;
+}
+
+@keyframes slide {
+  from {
+    left: -40%;
+  }
+  to {
+    left: 100%;
+  }
+}

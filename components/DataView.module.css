@@ -1,0 +1,382 @@
+.root {
+  --row-py: 10px;
+  --cell-px: 12px;
+
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-xl);
+  background: var(--ui-bg);
+  color: var(--ui-fg);
+  overflow: hidden;
+}
+
+.compact {
+  --row-py: 6px;
+  --cell-px: 10px;
+  font-size: var(--ui-text-sm);
+}
+
+.comfortable {
+  --row-py: 14px;
+  --cell-px: 16px;
+}
+
+.muted {
+  color: var(--ui-fg-muted);
+}
+
+/* Тулбар */
+.toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--ui-space-2);
+  padding: var(--ui-space-2) var(--ui-space-3);
+  border-bottom: 1px solid var(--ui-border);
+}
+
+.search {
+  width: 240px;
+  max-width: 100%;
+}
+
+.selectedCount {
+  color: var(--ui-fg-muted);
+  font-size: var(--ui-text-sm);
+}
+
+.toolbarEnd {
+  display: flex;
+  align-items: center;
+  gap: var(--ui-space-2);
+  margin-left: auto;
+}
+
+/* Таблица */
+.tableScroll {
+  overflow: auto;
+}
+
+.table {
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.th {
+  position: relative;
+  height: 36px;
+  padding: 0 var(--cell-px);
+  border-bottom: 1px solid var(--ui-border);
+  background: var(--ui-bg-subtle);
+  color: var(--ui-fg-muted);
+  font-size: var(--ui-text-sm);
+  font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stickyHeader .th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.stickyHeader .th.pinned {
+  z-index: 3;
+}
+
+.sortButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+  margin: 0 -4px;
+  padding: 2px 4px;
+  border: 0;
+  border-radius: var(--ui-radius-sm);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.sortButton:hover {
+  color: var(--ui-fg);
+  background: var(--ui-bg-hover);
+}
+
+.sortButton:focus-visible {
+  outline: 2px solid var(--ui-ring);
+  outline-offset: 0;
+}
+
+.sortIcon {
+  display: inline-flex;
+  opacity: 0.4;
+}
+
+.sortIcon > svg {
+  width: 13px;
+  height: 13px;
+}
+
+.sortActive {
+  opacity: 1;
+  color: var(--ui-fg);
+}
+
+.resizer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+  user-select: none;
+  touch-action: none;
+}
+
+.resizer::after {
+  content: '';
+  position: absolute;
+  top: 25%;
+  right: 2px;
+  width: 1px;
+  height: 50%;
+  background: var(--ui-border-strong);
+}
+
+.resizer:hover::after,
+.resizing::after {
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background: var(--ui-ring);
+}
+
+.tr {
+  transition: background-color var(--ui-duration) var(--ui-ease);
+}
+
+.td {
+  padding: var(--row-py) var(--cell-px);
+  border-bottom: 1px solid var(--ui-border);
+  background: var(--ui-bg);
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+tbody > tr:last-child > .td {
+  border-bottom: 0;
+}
+
+.tr:hover > .td {
+  background: var(--ui-bg-subtle);
+}
+
+.tr[data-selected] > .td {
+  background: var(--ui-bg-muted);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.pinned {
+  position: sticky;
+  z-index: 1;
+}
+
+.align-left {
+  text-align: left;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.align-right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.align-right .sortButton {
+  flex-direction: row-reverse;
+}
+
+.expander,
+.groupToggle {
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  background: transparent;
+  color: var(--ui-fg-muted);
+  font: inherit;
+  cursor: pointer;
+  border-radius: var(--ui-radius-sm);
+}
+
+.expander {
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+}
+
+.expander:hover,
+.groupToggle:hover {
+  background: var(--ui-bg-hover);
+  color: var(--ui-fg);
+}
+
+.expander:focus-visible,
+.groupToggle:focus-visible {
+  outline: 2px solid var(--ui-ring);
+  outline-offset: 0;
+}
+
+.expander > svg,
+.groupToggle > svg {
+  width: 16px;
+  height: 16px;
+}
+
+.groupRow > .td {
+  background: var(--ui-bg-subtle);
+}
+
+.groupToggle {
+  gap: 6px;
+  padding: 2px 4px;
+  margin-left: -4px;
+  color: var(--ui-fg);
+}
+
+.groupCount {
+  min-width: 18px;
+  padding: 0 6px;
+  border-radius: var(--ui-radius-full);
+  background: var(--ui-bg-active);
+  color: var(--ui-fg-muted);
+  font-size: var(--ui-text-xs);
+  line-height: 18px;
+  text-align: center;
+}
+
+.expandedRow > .expandedCell {
+  padding: var(--ui-space-4) var(--ui-space-5);
+  border-bottom: 1px solid var(--ui-border);
+  background: var(--ui-bg-subtle);
+  white-space: normal;
+}
+
+.emptyCell {
+  padding: 0;
+}
+
+/* Список */
+.listScroll {
+  overflow: auto;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ui-space-3);
+  padding: var(--row-py) var(--cell-px);
+  border-bottom: 1px solid var(--ui-border);
+  flex-direction: row;
+}
+
+.listItem:has(> span[aria-hidden]) {
+  flex-direction: column;
+  gap: 8px;
+}
+
+.listItem:last-child {
+  border-bottom: 0;
+}
+
+.listItem:hover {
+  background: var(--ui-bg-subtle);
+}
+
+.listItem[data-selected] {
+  background: var(--ui-bg-muted);
+}
+
+.listContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.listPrimary {
+  font-weight: 500;
+}
+
+.listMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-top: 2px;
+  color: var(--ui-fg-muted);
+  font-size: var(--ui-text-sm);
+}
+
+/* Подвал */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ui-space-3);
+  padding: var(--ui-space-2) var(--ui-space-3);
+  border-top: 1px solid var(--ui-border);
+  font-size: var(--ui-text-sm);
+}
+
+/* Настройки колонок */
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 220px;
+}
+
+.settingsTitle {
+  margin: 0;
+  color: var(--ui-fg-muted);
+  font-size: var(--ui-text-xs);
+  font-weight: 500;
+}
+
+.settingsList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.settingsItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.settingsMove {
+  display: inline-flex;
+}

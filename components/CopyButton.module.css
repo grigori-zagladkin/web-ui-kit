@@ -1,0 +1,22 @@
+.root {
+  display: inline-flex;
+  color: var(--ui-fg-muted);
+}
+
+.root button {
+  color: inherit;
+}
+
+.copied {
+  color: var(--ui-success);
+}
+
+/* объявление для скринридеров, визуально скрыто */
+.live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

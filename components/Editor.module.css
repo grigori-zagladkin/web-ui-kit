@@ -1,0 +1,112 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--ui-border);
+  border-radius: var(--ui-radius-lg);
+  background: var(--ui-bg);
+  box-shadow: var(--ui-shadow-sm);
+  transition:
+    border-color var(--ui-duration) var(--ui-ease),
+    box-shadow var(--ui-duration) var(--ui-ease);
+}
+
+.root:focus-within {
+  border-color: var(--ui-ring);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--ui-ring) 25%, transparent);
+}
+
+.root[data-invalid] {
+  border-color: var(--ui-danger);
+}
+
+.root[data-readonly] {
+  box-shadow: none;
+  background: var(--ui-bg-subtle);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-bottom: 1px solid var(--ui-border);
+}
+
+.toolbarPlaceholder {
+  height: 37px;
+  border-bottom: 1px solid var(--ui-border);
+}
+
+.tool {
+  color: var(--ui-fg-muted);
+}
+
+.tool[data-active] {
+  background: var(--ui-bg-active);
+  color: var(--ui-fg);
+}
+
+.divider {
+  width: 1px;
+  height: 18px;
+  margin: 0 4px;
+  background: var(--ui-border);
+}
+
+.mount {
+  display: contents;
+}
+
+.content {
+  min-height: var(--editor-min-height, 160px);
+  padding: 12px 14px;
+  outline: none;
+  font-size: var(--ui-text-md);
+}
+
+.content :global(p.is-editor-empty:first-child::before) {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  color: var(--ui-fg-subtle);
+  pointer-events: none;
+}
+
+.content :global(.ProseMirror-selectednode) {
+  outline: 2px solid var(--ui-ring);
+  outline-offset: 2px;
+}
+
+.footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 4px 10px 6px;
+  color: var(--ui-fg-subtle);
+  font-size: var(--ui-text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.footer [data-limit] {
+  color: var(--ui-danger-fg);
+}
+
+.popoverForm {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 280px;
+}
+
+.popoverActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.formError {
+  margin: 0;
+  color: var(--ui-danger-fg);
+  font-size: var(--ui-text-xs);
+}

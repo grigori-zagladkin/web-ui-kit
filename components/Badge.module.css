@@ -1,0 +1,68 @@
+.badge {
+  --badge-bg: var(--ui-bg-muted);
+  --badge-fg: var(--ui-fg-muted);
+  --badge-border: var(--ui-border);
+  --badge-dot: var(--ui-fg-subtle);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: var(--ui-radius-full);
+  border: 1px solid transparent;
+  font-size: var(--ui-text-xs);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.soft {
+  background: var(--badge-bg);
+  color: var(--badge-fg);
+}
+
+.outline {
+  background: transparent;
+  color: var(--badge-fg);
+  border-color: var(--badge-border);
+}
+
+.neutral {
+  --badge-fg: var(--ui-fg);
+}
+
+.accent {
+  --badge-bg: var(--ui-accent-bg);
+  --badge-fg: var(--ui-accent-fg);
+  --badge-border: var(--ui-accent-border);
+  --badge-dot: var(--ui-accent);
+}
+
+.success {
+  --badge-bg: var(--ui-success-bg);
+  --badge-fg: var(--ui-success-fg);
+  --badge-border: var(--ui-success-border);
+  --badge-dot: var(--ui-success);
+}
+
+.warning {
+  --badge-bg: var(--ui-warning-bg);
+  --badge-fg: var(--ui-warning-fg);
+  --badge-border: var(--ui-warning-border);
+  --badge-dot: var(--ui-warning);
+}
+
+.danger {
+  --badge-bg: var(--ui-danger-bg);
+  --badge-fg: var(--ui-danger-fg);
+  --badge-border: var(--ui-danger-border);
+  --badge-dot: var(--ui-danger);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--badge-dot);
+}
